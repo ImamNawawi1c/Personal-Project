@@ -1,5 +1,6 @@
 import hashlib # mengubah isi data jadi hash/sidik jari digital
 import os
+import shutil
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__)) #ini mengambil alamat dimana folder scanner berada
 SIGNATURE_FILE = os.path.join(BASE_DIR, "signatures.txt") #gabungkan folder di atas dengan signatures.txt/
@@ -24,12 +25,22 @@ def scan_file(file_path):
     signatures = load_signatures() # jadi file signatures.txt itu sebagai database virus
 
     if file_hash in signatures:
+        quarantine_file(file_path)
         result = "Virus Terdeteksi"
     else:
-        result = "File Aman "
+        result = "File Aman"
     log_result(file_path,result)
     return result
 
 def log_result(file_path,result):
     with open("log.txt","a") as log:
         log.write(f"{file_path} -> {result}\n")
+
+def quarantine_file(file_path):
+    quarantine_dir = os.path.join(BASE_DIR, "quarantine")
+    os.makedirs(quarantine_dir, exist_ok=True)
+
+    file_name = os.path.basename(file_path)
+    name_path = os.path.join(quarantine_dir, file_name)
+
+    shutil.move(file_name, name_path)

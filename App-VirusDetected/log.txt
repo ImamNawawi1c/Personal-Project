@@ -1,1 +1,3 @@
 D:\Aplikasi\App-VirusDetected\virus_disini.txt -> Virus Terdeteksi
+D:\Aplikasi\App-VirusDetected\log.txt -> File Aman
+D:\Aplikasi\App-VirusDetected\virus_disini.txt -> Virus Terdeteksi
